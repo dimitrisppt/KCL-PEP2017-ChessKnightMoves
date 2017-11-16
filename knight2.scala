@@ -11,7 +11,7 @@ type Path = List[Pos]    // a path...a list of positions
 
 //(2a) Implement a first-function that finds the first 
 //     element, say x, in the list xs where f is not None. 
-//     In that case return f(x), otherwise None. If possible,
+//     In that case Return f(x), otherwise None. If possible,
 //     calculate f(x) only once.
 
 //def first(xs: List[Pos], f: Pos => Option[Path]) : Option[Path] = ...
