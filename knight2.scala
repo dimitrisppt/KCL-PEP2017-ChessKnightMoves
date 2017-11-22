@@ -56,7 +56,11 @@ def first(xs: List[Pos], f: Pos => Option[Path]) : Option[Path] = {
 //     knight tour on a dim * dim-board.
 
 def first_tour(dim: Int, path: Path) : Option[Path] = {
-
+    if (dim*dim == path.length) {
+        Some(path)
+    } else {
+      first(legal_moves(dim, path, path.head), fpath => first_tour(dim, fpath::path))
+    }
 }
 
 }
