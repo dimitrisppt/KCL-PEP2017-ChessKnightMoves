@@ -36,7 +36,7 @@ def legal_moves(dim: Int, path: Path, x: Pos) : List[Pos] = {
 //     In that case Return f(x), otherwise None. If possible,
 //     calculate f(x) only once.
 
-def f = (x:(Int, Int)) => if (x._1 > 3) Some(List(x)) else None
+// def f = (x:(Int, Int)) => if (x._1 > 3) Some(List(x)) else None
 
 def first(xs: List[Pos], f: Pos => Option[Path]) : Option[Path] = {
     if (xs.size == 0) {
