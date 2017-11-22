@@ -29,13 +29,13 @@ def legal_moves(dim: Int, path: Path, x: Pos) : List[Pos] = {
 
 
 //some test cases
-//
-// assert(legal_moves(8, Nil, (2,2)) ==
-//  List((3,4), (4,3), (4,1), (3,0), (1,0), (0,1), (0,3), (1,4)))
-// assert(legal_moves(8, Nil, (7,7)) == List((6,5), (5,6)))
-// assert(legal_moves(8, List((4,1), (1,0)), (2,2)) ==
-//  List((3,4), (4,3), (3,0), (0,1), (0,3), (1,4)))
-// assert(legal_moves(8, List((6,6)), (7,7)) == List((6,5), (5,6)))
+
+assert(legal_moves(8, Nil, (2,2)) ==
+ List((3,4), (4,3), (4,1), (3,0), (1,0), (0,1), (0,3), (1,4)))
+assert(legal_moves(8, Nil, (7,7)) == List((6,5), (5,6)))
+assert(legal_moves(8, List((4,1), (1,0)), (2,2)) ==
+ List((3,4), (4,3), (3,0), (0,1), (0,3), (1,4)))
+assert(legal_moves(8, List((6,6)), (7,7)) == List((6,5), (5,6)))
 
 
 //(1c) Complete the two recursive functions below.
@@ -43,9 +43,29 @@ def legal_moves(dim: Int, path: Path, x: Pos) : List[Pos] = {
 //     given path. The first function counts all possible tours,
 //     and the second collects all tours in a list of paths.
 
-// def count_tours(dim: Int, path: Path) : Int = ...
-//
-// def enum_tours(dim: Int, path: Path) : List[Path] = ...
+ def count_tours(dim: Int, path: Path) : Int = {
 
+     val moves = legal_moves(dim, path, path.head)
+     if (legal_moves(dim, List(path.head), path.head).contains(path.last) && dim*dim == path.size) {
+        0
+    } else if ((!(legal_moves(dim, List(path.head), path.head).contains(path.last))) && dim*dim == path.size) {
+        1
+    } else {
+        (for (eachMove <- moves)
+            yield count_tours(dim, eachMove::path))
+            .sum
+    }
+}
 
+def enum_tours(dim: Int, path: Path) : List[Path] = {
+    val moves = legal_moves(dim, path, path.head)
+        if (legal_moves(dim, List(path.head), path.head).contains(path.last) && dim*dim == path.size) {
+            Nil
+        } else if ((!(legal_moves(dim, List(path.head), path.head).contains(path.last))) && dim*dim == path.size) {
+           List(path)
+        } else {
+            (for (eachMove <- moves)
+                yield enum_tours(dim, eachMove::path))
+                .flatten
+        }
 }
