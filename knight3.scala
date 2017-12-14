@@ -73,3 +73,5 @@ def first_closed_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
 // def first_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
 //
 // }
+
+}
