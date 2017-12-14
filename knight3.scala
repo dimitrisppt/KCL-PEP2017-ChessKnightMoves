@@ -56,16 +56,20 @@ def ordered_moves(dim: Int, path: Path, x: Pos) : List[Pos] = {
 //(3b) Complete the function that searches for a single *closed*
 //     tour using the ordered moves function.
 
-// def first_closed_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
-//
-// }
+def first_closed_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
+    if (path.length == dim * dim && (legal_moves(dim, List(path.head), path.head).contains(path.last))) {
+        Some(path)
+    } else {
+      first(ordered_moves(dim, path, path.head),
+      yc => first_closed_tour_heuristic(dim, yc :: path))
+    }
+}
 
 
 //(3c) Same as (3b) but searches for *non-closed* tours. However,
 //     you have to be careful to write a tail-recursive version as this
 //     function will be called with dimensions of up to 40 * 40.
 
-//def first_tour_heuristic(dim: Int, path: Path) : Option[Path] = ...
-
-
-}
+// def first_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
+//
+// }
