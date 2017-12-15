@@ -47,8 +47,8 @@ def first(xs: List[Pos], f: Pos => Option[Path]) : Option[Path] = {
 //     rule. That means moves with the fewest legal onward moves
 //     should come first.
 
-def ordered_moves(dim: Int, path: Path, x: Pos) : List[Pos] = {
-    val ordered_legal_moves = legal_moves(dim, path, x)
+def ordered_moves(dim: Int, path: Path, cord: Pos) : List[Pos] = {
+    val ordered_legal_moves = legal_moves(dim, path, cord)
     ordered_legal_moves.sortWith(legal_moves(dim, path, _).size < legal_moves(dim, path, _).size)
 }
 
@@ -70,8 +70,17 @@ def first_closed_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
 //     you have to be careful to write a tail-recursive version as this
 //     function will be called with dimensions of up to 40 * 40.
 
-// def first_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
-//
-// }
+def handleOverflows(tempList: List[Path], dim: Int, path: Path): Option[Path] = tempList match {
+    case head :: remains => if (dim * dim == head.size) {
+                            Some(head)
+                        } else {
+                            handleOverflows(ordered_moves(dim, head, head.head).map(_ :: head),dim,path)
+                        }
+    case Nil => None
+}
+
+def first_tour_heuristic(dim: Int, path: Path) : Option[Path] = {
+    handleOverflows(path::Nil,dim,path)
+}
 
 }
